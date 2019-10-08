@@ -15,11 +15,9 @@ namespace WebApiEither.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<string>> GetValue()
-        {
-            var either = await _valuesService.GetValueAsync();
-            return either.ToResponse();
-        }
-
+        public Task<ActionResult<string>> GetValue() =>
+            _valuesService
+                .GetValueAsync()
+                .Then(either => either.ToResponse());
     }
 }
